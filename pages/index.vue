@@ -6,6 +6,7 @@
                     <div class="max-w-md">
                         <h1 class="text-3xl font-bold">This is our home page</h1>
                         <p class="py-6">Welcome to home page</p>
+                        <button @click="couter.increment">Count {{ couter.count }} - {{ couter.doubleCount }}</button>
                     </div>
                 </div>
             </div>
@@ -15,6 +16,7 @@
 
 <script lang="ts" setup>
 
+    const couter = useCounterStore();
 </script>
 
 <style></style>

@@ -1,4 +1,9 @@
 <script lang="ts" setup>
+// import { useAuthStore } from '~/stores/auth';
+
+
+    const auth = useAuthStore();
+
     const form = reactive({
         email: 'test@example.com',
         password: 'password'
@@ -8,22 +13,8 @@
 
     const handleSubmit = async () => {
         try {
-            await useFetch("http://localhost:8000/sanctum/csrf-cookie", {
-                credentials: "include",
-            });
-            const token = useCookie('XSRF-TOKEN');
-            const { data } = await $fetch(`http://localhost:8000/api/login`, {
-                credentials: "include",
-                method: 'POST',
-                body: {...form},
-                headers: {
-                    'X-XSRF-TOKEN': token.value as string,
-                },
-                // watch: false
-            });
-            
+            await auth.login(form);
         } catch (error) {
-            console.log(error)
             errors.value = error.data.errors
         }
 

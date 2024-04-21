@@ -4,8 +4,8 @@
             <div class="hero min-h-screen bg-base-200">
                 <div class="hero-content text-center">
                     <div class="max-w-md">
-                        <h1 class="text-3xl font-bold">This is our home page</h1>
-                        <p class="py-6">Welcome to home page</p>
+                        <h1 class="text-3xl font-bold">This is our about page</h1>
+                        <p class="py-6">Welcome to about page</p>
                     </div>
                 </div>
             </div>

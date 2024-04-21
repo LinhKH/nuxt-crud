@@ -4,8 +4,10 @@
             <div class="hero min-h-screen bg-base-200">
                 <div class="hero-content text-center">
                     <div class="max-w-md">
-                        <h1 class="text-3xl font-bold">This is our home page</h1>
-                        <p class="py-6">Welcome to home page</p>
+                        <h1 class="text-3xl font-bold">This is Our Dashboard page</h1>
+                        <p class="py-6">Welcome to Dashboard page</p>
+                        <p class="py-2">Name: <strong>My tesst name</strong></p>
+                        <p class="py-2">Email: <strong>My tesst email</strong></p>
                     </div>
                 </div>
             </div>

@@ -1,11 +1,32 @@
 <script lang="ts" setup>
     const form = reactive({
-        email: null,
-        password: null
+        email: 'test@example.com',
+        password: 'password'
     });
 
-    const handleSubmit = () => {
-        console.log(form)
+    const errors = ref([]);
+
+    const handleSubmit = async () => {
+        try {
+            await useFetch("http://localhost:8000/sanctum/csrf-cookie", {
+                credentials: "include",
+            });
+            const token = useCookie('XSRF-TOKEN');
+            const { data } = await $fetch(`http://localhost:8000/api/login`, {
+                credentials: "include",
+                method: 'POST',
+                body: {...form},
+                headers: {
+                    'X-XSRF-TOKEN': token.value as string,
+                },
+                // watch: false
+            });
+            
+        } catch (error) {
+            console.log(error)
+            errors.value = error.data.errors
+        }
+
     }
 </script>
 <template>
@@ -22,6 +43,7 @@
                                 </FormLabel>
                                 <FormInputText v-model="form.email" type="email" id="email"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                                <span v-if="errors.email" class="text-red-500">{{ errors.email[0] }}</span>
                             </div>
                             <div class="mb-5">
                                 <FormLabel for="password"
@@ -30,6 +52,7 @@
                                 </FormLabel>
                                 <FormInputText v-model="form.password" type="password" id="password"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                                <span v-if="errors.password" class="text-red-500">{{ errors.password[0] }}</span>
                             </div>
                             <ButtonPrimary>Login</ButtonPrimary>
                         </form>

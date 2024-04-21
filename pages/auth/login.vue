@@ -3,6 +3,7 @@
 
 
     const auth = useAuthStore();
+    const token = useTokenStore();
 
     const form = reactive({
         email: 'test@example.com',
@@ -15,6 +16,8 @@
         try {
             await auth.login(form);
         } catch (error) {
+            console.log(error);
+            
             errors.value = error.data.errors
         }
 
@@ -26,6 +29,7 @@
             <div class="hero min-h-screen bg-base-200">
                 <div class="hero-content text-center">
                     <div class="max-w-md">
+                        {{ token.getToken }} - {{ token.getStatus }}
                         <form class="max-w-sm mx-auto" @submit.prevent="handleSubmit">
                             <div class="mb-5">
                                 <FormLabel for="email"
@@ -47,6 +51,7 @@
                             </div>
                             <ButtonPrimary>Login</ButtonPrimary>
                         </form>
+                        <ButtonPrimary @click="token.removeToken" class="mt-2">Remove Token</ButtonPrimary>
                     </div>
                 </div>
             </div>

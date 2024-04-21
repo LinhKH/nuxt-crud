@@ -1,28 +1,31 @@
 
 
-
 export const useAuthStore = defineStore('auth', {
-    state: () => ({ count: 0, name: 'Eduardo' }),
+    state: () => ({
+        loggedIn: false
+    }),
     getters: {
-        doubleCount: (state) => state.count * 2,
+        getLoggedIn: (state) => state.loggedIn,
     },
     actions: {
         async login(formData) {
+            const token = useTokenStore();
             try {
                 await $fetch("http://localhost:8000/sanctum/csrf-cookie", {
                     credentials: "include",
                 });
-                const token = useCookie('XSRF-TOKEN');
+                const xsrf_token = useCookie('XSRF-TOKEN');
                 const { data } = await $fetch(`http://localhost:8000/api/login`, {
                     credentials: "include",
                     method: 'POST',
                     body: { ...formData },
                     headers: {
-                        'X-XSRF-TOKEN': token.value,
+                        'X-XSRF-TOKEN': xsrf_token.value,
                     },
-                    // watch: false
+                    watch: false
                 });
-                console.log('auth-store', data)
+                this.loggedIn = true;
+                token.setToken(data.token)
             } catch (error) {
                 throw error
             }

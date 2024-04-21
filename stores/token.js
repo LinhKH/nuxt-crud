@@ -14,6 +14,8 @@ export const useTokenStore = defineStore('token', {
             this.loggedIn = true;
         },
         removeToken() {
+            const auth = useAuthStore();
+            auth.loggedIn = false;
             this.$reset();
         }
     },

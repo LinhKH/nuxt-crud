@@ -6,8 +6,8 @@
                     <div class="max-w-md">
                         <h1 class="text-3xl font-bold">This is Our Dashboard page</h1>
                         <p class="py-6">Welcome to Dashboard page</p>
-                        <p class="py-2">Name: <strong>My tesst name</strong></p>
-                        <p class="py-2">Email: <strong>My tesst email</strong></p>
+                        <p class="py-2">Name: <strong>{{ auth.getUser?.name }}</strong></p>
+                        <p class="py-2">Email: <strong>{{ auth.getUser?.email }}</strong></p>
                     </div>
                 </div>
             </div>
@@ -16,7 +16,7 @@
 </template>
 
 <script lang="ts" setup>
-
+const auth = useAuthStore();
 </script>
 
 <style></style>

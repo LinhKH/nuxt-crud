@@ -51,7 +51,6 @@
                             </div>
                             <ButtonPrimary>Login</ButtonPrimary>
                         </form>
-                        <ButtonPrimary @click="token.removeToken" class="mt-2">Remove Token</ButtonPrimary>
                     </div>
                 </div>
             </div>

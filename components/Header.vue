@@ -1,8 +1,13 @@
+<script lang="ts" setup>
+    const token = useTokenStore();
+    const auth = useAuthStore();
+</script>
+
 <template>
     <nav class="bg-white border-gray-200 dark:bg-gray-900 shadow">
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
             <Applogo />
-            <div class="flex md:order-2 space-x-2">
+            <div class="flex md:order-2 space-x-2" v-if="!token.getStatus">
                 <NuxtLink to="/auth/login" type="button"
                     class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                     Login</NuxtLink>
@@ -10,7 +15,13 @@
                     class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                     Register</NuxtLink>
             </div>
-            <div class="hidden w-full md:block md:w-auto" id="navbar-default">
+            <div class="flex md:order-2 space-x-2" v-else-if="token.getStatus">
+                <buton  type="button" @click="auth.logout"
+                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    Logout</buton>
+                
+            </div>
+            <div class="hidden w-full md:block md:w-auto" id="navbar-default" v-else>
                 <ul
                     class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
                     <li>
@@ -34,8 +45,5 @@
         </div>
     </nav>
 </template>
-<script lang="ts" setup>
-
-</script>
 
 <style></style>

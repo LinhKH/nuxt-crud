@@ -1,27 +1,29 @@
 <script lang="ts" setup>
 // import { useAuthStore } from '~/stores/auth';
 
+definePageMeta({
+    middleware: ["guest"]
+});
+const auth = useAuthStore();
+const token = useTokenStore();
 
-    const auth = useAuthStore();
-    const token = useTokenStore();
+const form = reactive({
+    email: 'test@example.com',
+    password: 'password'
+});
 
-    const form = reactive({
-        email: 'test@example.com',
-        password: 'password'
-    });
+const errors = ref([]);
 
-    const errors = ref([]);
+const handleSubmit = async () => {
+    try {
+        await auth.login(form);
+    } catch (error) {
+        console.log(error);
 
-    const handleSubmit = async () => {
-        try {
-            await auth.login(form);
-        } catch (error) {
-            console.log(error);
-            
-            errors.value = error.data.errors
-        }
-
+        errors.value = error.data.errors
     }
+
+}
 </script>
 <template>
     <div class="w-full">
@@ -29,7 +31,7 @@
             <div class="hero min-h-screen bg-base-200">
                 <div class="hero-content text-center">
                     <div class="max-w-md">
-                        {{ token.getToken }} - {{ token.getStatus }}
+                        
                         <form class="max-w-sm mx-auto" @submit.prevent="handleSubmit">
                             <div class="mb-5">
                                 <FormLabel for="email"

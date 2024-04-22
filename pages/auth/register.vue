@@ -2,7 +2,9 @@
 
 const auth = useAuthStore();
 const token = useTokenStore();
-
+definePageMeta({
+    middleware: ["guest"]
+});
 const form = reactive({
     name: 'Linh Kieu',
     email: 'test@example.com',
